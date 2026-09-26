@@ -32,3 +32,5 @@ build/
 
 # Jupyter
 .ipynb_checkpoints/
+# Collected Static Files
+staticfiles/
