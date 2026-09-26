@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AIShield - AI Security Detector</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            background: #111827;
+            padding: 16px 35px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        nav a {
+            color: #d1d5db;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            max-width: 1100px;
+            margin: 50px auto 30px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+            color: #111827;
+        }
+
+        .hero h1 span {
+            color: #2563eb;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: auto;
+            color: #6b7280;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            max-width: 1000px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 23px;
+        }
+
+        .card-description {
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        /* ================= TEXTAREA ================= */
+
+        textarea {
+            width: 100%;
+            min-height: 190px;
+            resize: vertical;
+
+            padding: 17px;
+
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+
+            font-family: Arial, sans-serif;
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        /* ================= BUTTON ================= */
+
+        .analyze-btn {
+            margin-top: 18px;
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+            border-radius: 9px;
+
+            background: #2563eb;
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .analyze-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* ================= RESULT ================= */
+
+        .result-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+
+            margin-bottom: 25px;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 22px;
+        }
+
+        .result-header h2 {
+            margin: 0;
+        }
+
+        .risk-badge {
+            padding: 8px 15px;
+            border-radius: 20px;
+
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .risk-high {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .risk-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .risk-low {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        /* ================= RESULT GRID ================= */
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .result-box {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .result-box .label {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .result-box .value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .score {
+            color: #2563eb;
+        }
+
+        /* ================= DETAILS ================= */
+
+        .detail-section {
+            margin-top: 25px;
+        }
+
+        .detail-section h3 {
+            font-size: 17px;
+            margin-bottom: 12px;
+        }
+
+        .detail-box {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+
+            border-radius: 9px;
+            padding: 15px;
+
+            line-height: 1.6;
+
+            word-break: break-word;
+        }
+
+        .keyword {
+            display: inline-block;
+
+            background: #fee2e2;
+            color: #991b1b;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            margin: 4px;
+
+            font-size: 13px;
+        }
+
+        .url {
+            display: block;
+
+            background: #f1f5f9;
+
+            padding: 10px;
+
+            margin-bottom: 8px;
+
+            border-radius: 7px;
+
+            font-family: monospace;
+
+            word-break: break-all;
+        }
+
+        /* ================= INFO CARDS ================= */
+
+        .features {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-top: 25px;
+        }
+
+        .feature {
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .feature h3 {
+            margin: 0 0 8px;
+            font-size: 17px;
+        }
+
+        .feature p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            text-align: center;
+
+            color: #6b7280;
+
+            padding: 35px 15px;
+
+            font-size: 14px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 8px;
+            }
+
+            .hero {
+                margin-top: 35px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .result-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <div class="logo">
+
+        🛡️ AI<span>Shield</span>
+
+    </div>
+
+    <div>
+
+        <a href="{% url 'home' %}">
+            Analyze
+        </a>
+
+        <a href="{% url 'history' %}">
+            History
+        </a>
+
+        <a href="{% url 'dashboard' %}">
+            Dashboard
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <h1>
+        AI-Powered
+        <span>Security Detector</span>
+    </h1>
+
+    <p>
+
+        Analyze suspicious messages, scam content,
+        spam and phishing URLs using machine learning
+        and security-based detection techniques.
+
+    </p>
+
+</section>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+    <!-- ANALYZER -->
+
+    <div class="card">
+
+        <h2>
+            🔍 Analyze Message
+        </h2>
+
+        <p class="card-description">
+
+            Paste a message, SMS, email text or suspicious
+            URL below. AIShield will analyze it for
+            potential security threats.
+
+        </p>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <textarea
+                name="message"
+                placeholder="Example:
+
+URGENT! Verify your account now:
+http://192.168.1.10/login
+
+Paste your message here..."
+                required></textarea>
+
+
+            <button
+                type="submit"
+                class="analyze-btn">
+
+                🔎 Analyze for Threats
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- ================= RESULT ================= -->
+
+    {% if result %}
+
+    <div class="result-card">
+
+
+        <div class="result-header">
+
+            <h2>
+                🛡️ Analysis Result
+            </h2>
+
+
+            <div
+                class="risk-badge
+
+                {% if result.risk_level == 'HIGH' %}
+                    risk-high
+
+                {% elif result.risk_level == 'MEDIUM' %}
+                    risk-medium
+
+                {% else %}
+                    risk-low
+                {% endif %}
+                ">
+
+                {{ result.risk_level }} RISK
+
+            </div>
+
+        </div>
+
+
+        <!-- RESULT GRID -->
+
+        <div class="result-grid">
+
+
+            <div class="result-box">
+
+                <div class="label">
+                    Risk Score
+                </div>
+
+                <div class="value score">
+
+                    {{ result.score }}%
+
+                </div>
+
+            </div>
+
+
+            <div class="result-box">
+
+                <div class="label">
+                    Risk Level
+                </div>
+
+                <div class="value">
+
+                    {{ result.risk_level }}
+
+                </div>
+
+            </div>
+
+
+            <div class="result-box">
+
+                <div class="label">
+                    Status
+                </div>
+
+                <div class="value">
+
+                    {{ result.status }}
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <div class="detail-section">
+
+            <h3>
+                📝 Analyzed Message
+            </h3>
+
+            <div class="detail-box">
+
+                {{ request.POST.message }}
+
+            </div>
+
+        </div>
+
+
+        <!-- URLs -->
+
+        <div class="detail-section">
+
+            <h3>
+                🔗 Detected URLs
+            </h3>
+
+
+            {% if result.urls %}
+
+                <div class="detail-box">
+
+                    {% for url in result.urls %}
+
+                        <span class="url">
+                            {{ url }}
+                        </span>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="detail-box">
+
+                    No URLs detected.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- KEYWORDS -->
+
+        <div class="detail-section">
+
+            <h3>
+                🚨 Suspicious Keywords
+            </h3>
+
+
+            {% if result.matched_keywords %}
+
+                <div class="detail-box">
+
+                    {% for keyword in result.matched_keywords %}
+
+                        <span class="keyword">
+                            {{ keyword }}
+                        </span>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="detail-box">
+
+                    No suspicious keywords detected.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- ================= FEATURES ================= -->
+
+    <div class="features">
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🤖
+            </div>
+
+            <h3>
+                AI Detection
+            </h3>
+
+            <p>
+
+                Machine learning and rule-based
+                analysis help identify suspicious
+                messages and scam patterns.
+
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🔗
+            </div>
+
+            <h3>
+                Phishing URL Analysis
+            </h3>
+
+            <p>
+
+                URLs are checked for suspicious
+                patterns, domains, IP addresses
+                and other security indicators.
+
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📊
+            </div>
+
+            <h3>
+                Detection History
+            </h3>
+
+            <p>
+
+                Previous security analyses are
+                stored so you can review results
+                and monitor detection activity.
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    AIShield — AI Spam, Scam & Phishing Link Detector
+
+    <br><br>
+
+    Built with Django, Python & Machine Learning
+
+</footer>
+
+
+</body>
+
+</html>

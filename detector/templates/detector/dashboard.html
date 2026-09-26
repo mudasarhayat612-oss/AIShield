@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AIShield Dashboard</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f4f7fb;
+
+            color: #1f2937;
+
+        }
+
+        /* ==================================================
+           NAVBAR
+        ================================================== */
+
+        .navbar {
+
+            background: #111827;
+
+            color: white;
+
+            padding: 16px 6%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 15px;
+
+        }
+
+        .logo {
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+            color: white;
+
+        }
+
+        .logo span {
+
+            color: #38bdf8;
+
+        }
+
+        .nav-links {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .nav-links a {
+
+            color: #d1d5db;
+
+            text-decoration: none;
+
+            padding: 8px 14px;
+
+            border-radius: 7px;
+
+            transition: 0.2s;
+
+        }
+
+        .nav-links a:hover {
+
+            background: #1f2937;
+
+            color: white;
+
+        }
+
+        .nav-links .active {
+
+            background: #2563eb;
+
+            color: white;
+
+        }
+
+
+        /* ==================================================
+           MAIN CONTAINER
+        ================================================== */
+
+        .container {
+
+            width: 88%;
+
+            max-width: 1300px;
+
+            margin: 35px auto 60px;
+
+        }
+
+
+        .page-header {
+
+            margin-bottom: 30px;
+
+        }
+
+        .page-header h1 {
+
+            font-size: 32px;
+
+            margin-bottom: 8px;
+
+            color: #111827;
+
+        }
+
+        .page-header p {
+
+            color: #6b7280;
+
+            font-size: 15px;
+
+        }
+
+
+        /* ==================================================
+           STAT CARDS
+        ================================================== */
+
+        .stats-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .stat-card {
+
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0, 0, 0, 0.06);
+
+            border: 1px solid #e5e7eb;
+
+        }
+
+
+        .stat-title {
+
+            font-size: 14px;
+
+            color: #6b7280;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .stat-number {
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+            color: #111827;
+
+        }
+
+
+        .stat-description {
+
+            margin-top: 8px;
+
+            font-size: 13px;
+
+            color: #9ca3af;
+
+        }
+
+
+        .blue {
+
+            border-top: 4px solid #2563eb;
+
+        }
+
+        .green {
+
+            border-top: 4px solid #16a34a;
+
+        }
+
+        .orange {
+
+            border-top: 4px solid #f59e0b;
+
+        }
+
+        .red {
+
+            border-top: 4px solid #dc2626;
+
+        }
+
+
+        /* ==================================================
+           DASHBOARD GRID
+        ================================================== */
+
+        .dashboard-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 25px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .card {
+
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0, 0, 0, 0.06);
+
+            border: 1px solid #e5e7eb;
+
+        }
+
+
+        .card h2 {
+
+            font-size: 20px;
+
+            margin-bottom: 22px;
+
+            color: #111827;
+
+        }
+
+
+        /* ==================================================
+           RISK BARS
+        ================================================== */
+
+        .risk-row {
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .risk-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+        }
+
+
+        .progress {
+
+            height: 11px;
+
+            background: #e5e7eb;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+        }
+
+
+        .progress-bar {
+
+            height: 100%;
+
+            border-radius: 20px;
+
+        }
+
+
+        .low-bar {
+
+            background: #16a34a;
+
+        }
+
+
+        .medium-bar {
+
+            background: #f59e0b;
+
+        }
+
+
+        .high-bar {
+
+            background: #dc2626;
+
+        }
+
+
+        /* ==================================================
+           ML SECTION
+        ================================================== */
+
+        .ml-stat {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 15px;
+
+            margin-bottom: 12px;
+
+            background: #f8fafc;
+
+            border-radius: 10px;
+
+            border: 1px solid #e5e7eb;
+
+        }
+
+
+        .ml-label {
+
+            font-weight: 600;
+
+            color: #374151;
+
+        }
+
+
+        .ml-value {
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+        }
+
+
+        .spam {
+
+            color: #dc2626;
+
+        }
+
+
+        .safe {
+
+            color: #16a34a;
+
+        }
+
+
+        .ml-info {
+
+            margin-top: 15px;
+
+            padding: 13px;
+
+            background: #eff6ff;
+
+            border-left: 4px solid #2563eb;
+
+            border-radius: 7px;
+
+            font-size: 13px;
+
+            color: #374151;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* ==================================================
+           CHART
+        ================================================== */
+
+        .chart-card {
+
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0, 0, 0, 0.06);
+
+            border: 1px solid #e5e7eb;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .chart-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .chart-header h2 {
+
+            font-size: 20px;
+
+            color: #111827;
+
+        }
+
+
+        .chart-header span {
+
+            font-size: 13px;
+
+            color: #6b7280;
+
+        }
+
+
+        .chart-container {
+
+            width: 100%;
+
+            height: 330px;
+
+            position: relative;
+
+        }
+
+
+        /* ==================================================
+           RECENT DETECTIONS
+        ================================================== */
+
+        .recent-card {
+
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0, 0, 0, 0.06);
+
+            border: 1px solid #e5e7eb;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .recent-card h2 {
+
+            font-size: 20px;
+
+            margin-bottom: 20px;
+
+            color: #111827;
+
+        }
+
+
+        .table-wrapper {
+
+            overflow-x: auto;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+
+        th {
+
+            text-align: left;
+
+            background: #f8fafc;
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+            padding: 13px;
+
+            border-bottom: 1px solid #e5e7eb;
+
+        }
+
+
+        td {
+
+            padding: 14px 13px;
+
+            border-bottom: 1px solid #f0f0f0;
+
+            font-size: 14px;
+
+        }
+
+
+        tr:hover {
+
+            background: #fafafa;
+
+        }
+
+
+        /* ==================================================
+           BADGES
+        ================================================== */
+
+        .badge {
+
+            display: inline-block;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+        }
+
+
+        .badge-high {
+
+            background: #fee2e2;
+
+            color: #b91c1c;
+
+        }
+
+
+        .badge-medium {
+
+            background: #fef3c7;
+
+            color: #b45309;
+
+        }
+
+
+        .badge-low {
+
+            background: #dcfce7;
+
+            color: #15803d;
+
+        }
+
+
+        /* ==================================================
+           VIEW BUTTON
+        ================================================== */
+
+        .view-btn {
+
+            display: inline-block;
+
+            padding: 7px 12px;
+
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 6px;
+
+            font-size: 12px;
+
+        }
+
+
+        .view-btn:hover {
+
+            background: #1d4ed8;
+
+        }
+
+
+        /* ==================================================
+           QUICK ACTIONS
+        ================================================== */
+
+        .actions {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+        }
+
+
+        .action-btn {
+
+            text-decoration: none;
+
+            background: #111827;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 14px;
+
+            border-radius: 9px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+
+        }
+
+
+        .action-btn:hover {
+
+            background: #2563eb;
+
+        }
+
+
+        /* ==================================================
+           FOOTER
+        ================================================== */
+
+        footer {
+
+            text-align: center;
+
+            padding: 25px;
+
+            color: #9ca3af;
+
+            font-size: 13px;
+
+        }
+
+
+        /* ==================================================
+           RESPONSIVE
+        ================================================== */
+
+        @media (max-width: 1000px) {
+
+            .stats-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .dashboard-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .navbar {
+
+                padding: 15px 4%;
+
+            }
+
+
+            .container {
+
+                width: 92%;
+
+            }
+
+
+            .stats-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .actions {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .page-header h1 {
+
+                font-size: 26px;
+
+            }
+
+
+            .chart-container {
+
+                height: 260px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ======================================================
+     NAVBAR
+====================================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        🛡️ AI<span>Shield</span>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{% url 'home' %}">
+            Analyze
+        </a>
+
+
+        <a href="{% url 'history' %}">
+            History
+        </a>
+
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="active"
+        >
+            Dashboard
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ======================================================
+     MAIN
+====================================================== -->
+
+<div class="container">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <h1>
+            Security Dashboard
+        </h1>
+
+        <p>
+            Monitor message risks, machine learning
+            predictions and phishing URL activity.
+        </p>
+
+    </div>
+
+
+    <!-- ==================================================
+         MAIN STATISTICS
+    ================================================== -->
+
+    <div class="stats-grid">
+
+
+        <!-- TOTAL -->
+
+        <div class="stat-card blue">
+
+            <div class="stat-title">
+                Total Detections
+            </div>
+
+            <div class="stat-number">
+                {{ total }}
+            </div>
+
+            <div class="stat-description">
+                All analyzed messages
+            </div>
+
+        </div>
+
+
+        <!-- LOW -->
+
+        <div class="stat-card green">
+
+            <div class="stat-title">
+                Low Risk
+            </div>
+
+            <div class="stat-number">
+                {{ low }}
+            </div>
+
+            <div class="stat-description">
+                {{ low_percentage }}% of total
+            </div>
+
+        </div>
+
+
+        <!-- MEDIUM -->
+
+        <div class="stat-card orange">
+
+            <div class="stat-title">
+                Medium Risk
+            </div>
+
+            <div class="stat-number">
+                {{ medium }}
+            </div>
+
+            <div class="stat-description">
+                {{ medium_percentage }}% of total
+            </div>
+
+        </div>
+
+
+        <!-- HIGH -->
+
+        <div class="stat-card red">
+
+            <div class="stat-title">
+                High Risk
+            </div>
+
+            <div class="stat-number">
+                {{ high }}
+            </div>
+
+            <div class="stat-description">
+                {{ high_percentage }}% of total
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         RISK + ML
+    ================================================== -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- RISK DISTRIBUTION -->
+
+        <div class="card">
+
+            <h2>
+                Risk Distribution
+            </h2>
+
+
+            <!-- LOW -->
+
+            <div class="risk-row">
+
+                <div class="risk-header">
+
+                    <span>
+                        Low Risk
+                    </span>
+
+                    <strong>
+                        {{ low_percentage }}%
+                    </strong>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar low-bar"
+                        style="width: {{ low_percentage }}%;"
+                    >
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MEDIUM -->
+
+            <div class="risk-row">
+
+                <div class="risk-header">
+
+                    <span>
+                        Medium Risk
+                    </span>
+
+                    <strong>
+                        {{ medium_percentage }}%
+                    </strong>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar medium-bar"
+                        style="width: {{ medium_percentage }}%;"
+                    >
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- HIGH -->
+
+            <div class="risk-row">
+
+                <div class="risk-header">
+
+                    <span>
+                        High Risk
+                    </span>
+
+                    <strong>
+                        {{ high_percentage }}%
+                    </strong>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar high-bar"
+                        style="width: {{ high_percentage }}%;"
+                    >
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RISK SUMMARY -->
+
+            <div class="ml-info">
+
+                <strong>
+                    Risky Detections:
+                </strong>
+
+                {{ risky_percentage }}%
+
+                <br>
+
+                Medium and High risk
+                detections combined.
+
+            </div>
+
+        </div>
+
+
+        <!-- MACHINE LEARNING -->
+
+        <div class="card">
+
+            <h2>
+                Machine Learning Analysis
+            </h2>
+
+
+            <div class="ml-stat">
+
+                <span class="ml-label">
+                    ML-Analyzed Messages
+                </span>
+
+                <span class="ml-value">
+                    {{ ml_analyzed_count }}
+                </span>
+
+            </div>
+
+
+            <div class="ml-stat">
+
+                <span class="ml-label">
+                    Spam Predictions
+                </span>
+
+                <span class="ml-value spam">
+                    {{ ml_spam_count }}
+                </span>
+
+            </div>
+
+
+            <div class="ml-stat">
+
+                <span class="ml-label">
+                    Safe Predictions
+                </span>
+
+                <span class="ml-value safe">
+                    {{ ml_safe_count }}
+                </span>
+
+            </div>
+
+
+            <div class="ml-stat">
+
+                <span class="ml-label">
+                    Spam Prediction Rate
+                </span>
+
+                <span class="ml-value spam">
+                    {{ ml_spam_percentage }}%
+                </span>
+
+            </div>
+
+
+            <div class="ml-info">
+
+                The machine learning model analyzes
+                message text using TF-IDF features
+                and a Logistic Regression classifier.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         DETECTION ACTIVITY CHART
+    ================================================== -->
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <h2>
+                Detection Activity
+            </h2>
+
+            <span>
+                Daily analyzed messages
+            </span>
+
+        </div>
+
+
+        <div class="chart-container">
+
+            <canvas
+                id="detectionChart"
+            >
+            </canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         ADDITIONAL STATISTICS
+    ================================================== -->
+
+    <div class="stats-grid">
+
+
+        <!-- URL -->
+
+        <div class="stat-card blue">
+
+            <div class="stat-title">
+                URL Detections
+            </div>
+
+            <div class="stat-number">
+                {{ url_detection_count }}
+            </div>
+
+            <div class="stat-description">
+                Messages containing URLs
+            </div>
+
+        </div>
+
+
+        <!-- RISKY -->
+
+        <div class="stat-card red">
+
+            <div class="stat-title">
+                Risky Detections
+            </div>
+
+            <div class="stat-number">
+                {{ high|add:medium }}
+            </div>
+
+            <div class="stat-description">
+                Medium + High risk
+            </div>
+
+        </div>
+
+
+        <!-- SAFE ML -->
+
+        <div class="stat-card green">
+
+            <div class="stat-title">
+                Safe ML Predictions
+            </div>
+
+            <div class="stat-number">
+                {{ ml_safe_count }}
+            </div>
+
+            <div class="stat-description">
+                {{ ml_safe_percentage }}% of ML results
+            </div>
+
+        </div>
+
+
+        <!-- SPAM ML -->
+
+        <div class="stat-card orange">
+
+            <div class="stat-title">
+                ML Spam Predictions
+            </div>
+
+            <div class="stat-number">
+                {{ ml_spam_count }}
+            </div>
+
+            <div class="stat-description">
+                {{ ml_spam_percentage }}% of ML results
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         RECENT DETECTIONS
+    ================================================== -->
+
+    <div class="recent-card">
+
+        <h2>
+            Recent Detections
+        </h2>
+
+
+        {% if recent_detections %}
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Message
+                        </th>
+
+                        <th>
+                            Risk
+                        </th>
+
+                        <th>
+                            Score
+                        </th>
+
+                        <th>
+                            ML
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                {% for detection in recent_detections %}
+
+
+                    <tr>
+
+
+                        <!-- MESSAGE -->
+
+                        <td>
+
+                            {% if detection.message|length > 60 %}
+
+                                {{ detection.message|slice:":60" }}...
+
+                            {% else %}
+
+                                {{ detection.message }}
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- RISK -->
+
+                        <td>
+
+
+                            {% if detection.risk_level == "HIGH" %}
+
+                                <span
+                                    class="badge badge-high"
+                                >
+                                    HIGH
+                                </span>
+
+
+                            {% elif detection.risk_level == "MEDIUM" %}
+
+                                <span
+                                    class="badge badge-medium"
+                                >
+                                    MEDIUM
+                                </span>
+
+
+                            {% else %}
+
+                                <span
+                                    class="badge badge-low"
+                                >
+                                    LOW
+                                </span>
+
+                            {% endif %}
+
+
+                        </td>
+
+
+                        <!-- SCORE -->
+
+                        <td>
+
+                            <strong>
+                                {{ detection.risk_score }}%
+                            </strong>
+
+                        </td>
+
+
+                        <!-- ML -->
+
+                        <td>
+
+
+                            {% if detection.ml_prediction == "spam" %}
+
+                                <span
+                                    class="badge badge-high"
+                                >
+                                    SPAM
+                                </span>
+
+
+                            {% elif detection.ml_prediction == "safe" %}
+
+                                <span
+                                    class="badge badge-low"
+                                >
+                                    SAFE
+                                </span>
+
+
+                            {% else %}
+
+                                <span
+                                    class="badge badge-medium"
+                                >
+                                    N/A
+                                </span>
+
+                            {% endif %}
+
+
+                        </td>
+
+
+                        <!-- DATE -->
+
+                        <td>
+
+                            {{ detection.created_at|date:"d M Y, h:i A" }}
+
+                        </td>
+
+
+                        <!-- ACTION -->
+
+                        <td>
+
+                            <a
+                                href="{% url 'detection_detail' detection.id %}"
+                                class="view-btn"
+                            >
+                                View
+                            </a>
+
+                        </td>
+
+
+                    </tr>
+
+
+                {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        {% else %}
+
+
+            <p style="
+                color:#6b7280;
+                text-align:center;
+                padding:30px;
+            ">
+
+                No detections available yet.
+
+            </p>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+    <!-- ==================================================
+         QUICK ACTIONS
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            Quick Actions
+        </h2>
+
+
+        <div class="actions">
+
+
+            <a
+                href="{% url 'home' %}"
+                class="action-btn"
+            >
+
+                🔎 Analyze New Message
+
+            </a>
+
+
+            <a
+                href="{% url 'history' %}"
+                class="action-btn"
+            >
+
+                📋 View Detection History
+
+            </a>
+
+
+            <a
+                href="{% url 'home' %}"
+                class="action-btn"
+            >
+
+                🛡️ Security Scanner
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    AIShield — AI-Powered Spam,
+    Scam & Phishing Detection System
+
+</footer>
+
+
+<!-- ======================================================
+     CHART.JS
+====================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+    const chartLabels =
+        {{ chart_labels|safe }};
+
+    const chartValues =
+        {{ chart_values|safe }};
+
+
+    const chartElement =
+        document.getElementById(
+            "detectionChart"
+        );
+
+
+    if (chartElement) {
+
+        new Chart(
+            chartElement,
+            {
+
+                type: "line",
+
+                data: {
+
+                    labels: chartLabels,
+
+                    datasets: [
+
+                        {
+
+                            label:
+                                "Daily Detections",
+
+                            data:
+                                chartValues,
+
+                            borderWidth: 3,
+
+                            tension: 0.35,
+
+                            fill: false,
+
+                            pointRadius: 4,
+
+                            pointHoverRadius: 6
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+
+                    interaction: {
+
+                        intersect: false,
+
+                        mode: "index"
+
+                    },
+
+
+                    plugins: {
+
+                        legend: {
+
+                            display: true
+
+                        }
+
+                    },
+
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            ticks: {
+
+                                precision: 0
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Detection Details | AIShield</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .container {
+            width: 86%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #6b7280;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 22px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 18px;
+        }
+
+        .message-box {
+            background: #f9fafb;
+            border-left: 4px solid #2563eb;
+            padding: 18px;
+            border-radius: 8px;
+            line-height: 1.7;
+            word-break: break-word;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .stat {
+            padding: 22px;
+            border-radius: 12px;
+            background: #f9fafb;
+            text-align: center;
+        }
+
+        .stat-title {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .risk-HIGH {
+            color: #dc2626;
+        }
+
+        .risk-MEDIUM {
+            color: #d97706;
+        }
+
+        .risk-LOW {
+            color: #16a34a;
+        }
+
+        .url-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .url-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .url {
+            font-weight: bold;
+            word-break: break-all;
+            color: #2563eb;
+        }
+
+        .score {
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .reason-list {
+            margin-left: 20px;
+            color: #4b5563;
+            line-height: 1.8;
+        }
+
+        .keyword-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .keyword {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .safe-box {
+            background: #ecfdf5;
+            border-left: 4px solid #16a34a;
+            padding: 18px;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: #fff7ed;
+            border-left: 4px solid #f97316;
+            padding: 18px;
+            border-radius: 8px;
+        }
+
+        .danger-box {
+            background: #fef2f2;
+            border-left: 4px solid #dc2626;
+            padding: 18px;
+            border-radius: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: #111827;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+
+        .back-btn:hover {
+            background: #1f2937;
+        }
+
+        .empty {
+            color: #6b7280;
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 10px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: #2563eb;
+            border-radius: 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .info-box {
+            background: #f9fafb;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .info-label {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 7px;
+        }
+
+        .info-value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 800px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .url-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="logo">
+        🛡️ AIShield
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'home' %}">
+            Analyze
+        </a>
+
+        <a href="{% url 'history' %}">
+            History
+        </a>
+
+        <a href="{% url 'dashboard' %}">
+            Dashboard
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+
+    <div class="page-header">
+
+        <h1>
+            Detection Details
+        </h1>
+
+        <p>
+            Detailed security analysis of the selected message.
+        </p>
+
+    </div>
+
+
+    <!-- MESSAGE -->
+
+    <div class="card">
+
+        <h2>
+            Analyzed Message
+        </h2>
+
+        <div class="message-box">
+
+            {{ detection.message }}
+
+        </div>
+
+    </div>
+
+
+    <!-- RISK SUMMARY -->
+
+    <div class="card">
+
+        <h2>
+            Security Result
+        </h2>
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    Risk Score
+                </div>
+
+                <div class="stat-value
+                    risk-{{ detection.risk_level }}">
+
+                    {{ detection.risk_score }}%
+
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    Risk Level
+                </div>
+
+                <div class="stat-value
+                    risk-{{ detection.risk_level }}">
+
+                    {{ detection.risk_level }}
+
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    Status
+                </div>
+
+                <div class="stat-value"
+                     style="font-size:18px;">
+
+                    {{ detection.status }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MACHINE LEARNING -->
+
+    <div class="card">
+
+        <h2>
+            🤖 Machine Learning Analysis
+        </h2>
+
+
+        <div class="info-grid">
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    ML Prediction
+                </div>
+
+                <div class="info-value">
+
+                    {% if detection.ml_prediction == "spam" %}
+
+                        <span class="risk-HIGH">
+                            SPAM / SCAM
+                        </span>
+
+                    {% elif detection.ml_prediction == "safe" %}
+
+                        <span class="risk-LOW">
+                            SAFE
+                        </span>
+
+                    {% else %}
+
+                        {{ detection.ml_prediction }}
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    ML Confidence
+                </div>
+
+                <div class="info-value">
+
+                    {{ detection.ml_confidence }}%
+
+                </div>
+
+
+                <div class="confidence-bar">
+
+                    <div class="confidence-fill"
+                         style="width: {{ detection.ml_confidence }}%;">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <p style="margin-top:18px;color:#6b7280;line-height:1.6;">
+
+            AIShield uses a machine-learning classifier together
+            with security rules and URL analysis. The ML confidence
+            represents the model's estimated probability that the
+            message belongs to the spam class.
+
+        </p>
+
+    </div>
+
+
+    <!-- URL ANALYSIS -->
+
+    <div class="card">
+
+        <h2>
+            🔗 URL Security Analysis
+        </h2>
+
+
+        {% if url_analysis %}
+
+            {% for item in url_analysis %}
+
+                <div class="url-card">
+
+                    <div class="url-header">
+
+                        <div class="url">
+                            {{ item.url }}
+                        </div>
+
+                        <div class="score
+                            risk-{{ item.risk }}">
+
+                            {{ item.score }}%
+                            — {{ item.risk }}
+
+                        </div>
+
+                    </div>
+
+
+                    <strong>
+                        Security Indicators
+                    </strong>
+
+                    <ul class="reason-list">
+
+                        {% for reason in item.reasons %}
+
+                            <li>
+                                {{ reason }}
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p class="empty">
+                No URLs were detected in this message.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- KEYWORDS -->
+
+    <div class="card">
+
+        <h2>
+            🚨 Suspicious Keywords
+        </h2>
+
+
+        {% if matched_keywords %}
+
+            <div class="keyword-container">
+
+                {% for keyword in matched_keywords %}
+
+                    <span class="keyword">
+                        {{ keyword }}
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="empty">
+                No suspicious message keywords were detected.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- RECOMMENDATION -->
+
+    <div class="card">
+
+        <h2>
+            🛡️ Security Recommendation
+        </h2>
+
+
+        {% if detection.risk_level == "HIGH" %}
+
+            <div class="danger-box">
+
+                <strong>
+                    High Risk Detected
+                </strong>
+
+                <p style="margin-top:8px;line-height:1.6;">
+
+                    Do not click suspicious links, share passwords,
+                    OTPs, banking details, or send money. Verify the
+                    sender through an independent trusted source.
+
+                </p>
+
+            </div>
+
+
+        {% elif detection.risk_level == "MEDIUM" %}
+
+            <div class="warning-box">
+
+                <strong>
+                    Suspicious Content
+                </strong>
+
+                <p style="margin-top:8px;line-height:1.6;">
+
+                    Be careful with this message. Verify the sender
+                    and avoid clicking unknown links or sharing
+                    sensitive information.
+
+                </p>
+
+            </div>
+
+
+        {% else %}
+
+            <div class="safe-box">
+
+                <strong>
+                    No Major Threat Detected
+                </strong>
+
+                <p style="margin-top:8px;line-height:1.6;">
+
+                    No major security indicators were found by the
+                    current detection engine. However, always remain
+                    cautious with unexpected messages and links.
+
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <a href="{% url 'history' %}"
+       class="back-btn">
+
+        ← Back to History
+
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>
