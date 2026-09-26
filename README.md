@@ -1,63 +1,89 @@
-# 🛡️ AIShield — AI Spam, Scam & Phishing Link Detector
+# 🛡️ AIShield – AI-Powered Threat Detection System
 
-![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
-![Django](https://img.shields.io/badge/Django-6.1-darkgreen?logo=django)
-![scikit--learn](https://img.shields.io/badge/scikit--learn-1.9-orange?logo=scikit-learn)
-![Project](https://img.shields.io/badge/Project-Educational-lightgrey)
+AIShield is an AI-powered cybersecurity web application designed to detect and analyze potentially malicious URLs and security threats.
 
-AIShield is an **AI/ML-powered Django web security application** that analyzes messages and URLs for potential spam, scams, and phishing indicators.
-
-The application combines **Machine Learning + rule-based security analysis** to generate a **0–100% risk score** and classify content as **LOW, MEDIUM, or HIGH risk**.
-
-> 🎓 **Portfolio / Educational Project:** This project demonstrates practical Django, NLP, Machine Learning, URL analysis, database integration, and dashboard development. It is not intended to replace professional security software.
+It provides users with a simple interface to scan URLs, view risk scores, check detection history, and monitor security activity through a dashboard.
 
 ---
 
 ## 🚀 Features
 
-### ⭐ Portfolio Highlights
+- 🔍 **URL Threat Detection**
+- 🤖 **AI/ML-Based Analysis**
+- 🛡️ **Risk Score Calculation**
+- 📊 **Security Dashboard**
+- 📋 **Detection History**
+- ⚡ **Fast URL Analysis**
+- 🎨 **Modern Responsive Interface**
+- 🔐 **Cybersecurity-Focused Design**
 
-- End-to-end Django + Machine Learning integration
-- Hybrid text and URL security analysis
-- Persistent detection history with SQLite
-- Analytics dashboard with Chart.js
-- ML spam/safe classification
-- Phishing URL analysis
-- Risk scoring from 0–100%
-- LOW / MEDIUM / HIGH risk classification
-- Detailed detection reports
-- Responsive web interface
-- Deployment-ready Django configuration
-- Portable ML model path
+---
 
-### 🤖 AI Spam Detection
+## 🧠 Risk Scoring
 
-- Machine Learning-based message classification
-- Detects spam and safe messages
-- Displays ML prediction
-- Displays ML confidence percentage
-- Uses TF-IDF and Logistic Regression
+AIShield analyzes submitted URLs and generates a security risk score.
 
-### 🔗 Phishing URL Detection
+The system categorizes URLs based on their detected risk level:
 
-AIShield analyzes URLs for:
+| Risk Level | Description |
+|------------|-------------|
+| 🟢 Low Risk | URL appears safe |
+| 🟡 Medium Risk | URL contains suspicious characteristics |
+| 🔴 High Risk | URL is potentially malicious |
 
-- IP address-based URLs
-- Suspicious keywords
-- HTTP instead of HTTPS
-- Very long URLs
-- Excessive subdomains
-- Suspicious TLDs
-- Multiple hyphens
-- URL encoding
-- Suspicious domain patterns
-- Excessive numbers in domains
-- Suspicious path structures
-- `@` symbols
+The risk score helps users quickly understand the potential security level of a URL.
 
-### 📊 Risk Scoring
+---
 
-Every detection receives a score:
+## 📸 Screenshots
+
+### 🏠 Home Page
+
+![AIShield Home](screenshots/home.png)
+
+### 🔍 Detection Result
+
+![AIShield Detection Result](screenshots/detection-result.png)
+
+### 📋 Detection History
+
+![AIShield Detection History](screenshots/history.png)
+
+### 📊 Security Dashboard
+
+![AIShield Dashboard](screenshots/dashboard.png)
+
+---
+
+## 🛠️ Technologies Used
+
+- Python
+- Django
+- HTML5
+- CSS3
+- JavaScript
+- Machine Learning
+- SQLite
+- Bootstrap
+
+---
+
+## 📂 Project Structure
 
 ```text
-0% → 100%
+AIShield/
+│
+├── screenshots/
+│   ├── home.png
+│   ├── detection-result.png
+│   ├── history.png
+│   └── dashboard.png
+│
+├── manage.py
+├── requirements.txt
+├── README.md
+│
+├── static/
+├── templates/
+│
+└── ...
